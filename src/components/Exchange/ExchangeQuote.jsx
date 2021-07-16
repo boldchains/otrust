@@ -35,6 +35,7 @@ export default function ExchangeQuote({ strength }) {
   const { askAmount, bidAmount, approveAmount, bidDenom, input, output, strong, weak } = useExchange();
   const { NOMallowance } = useChain();
   const { objDispatch, strDispatch } = useUpdateExchange();
+  const isBuying = strength === 'strong';
 
   const getAskAmount = useCallback(
     async (askAmountState, bidAmountUpdate, textStrength) => {
@@ -320,9 +321,9 @@ export default function ExchangeQuote({ strength }) {
 
   return (
     <ExchangeItem>
-      <strong>{strength === 'strong' ? 'Buy ' + weak : 'Sell ' + weak}</strong>
+      <strong>{isBuying ? 'Buy ' + weak : 'Sell ' + weak}</strong>
       <Sending>
-        <strong>I'm bidding</strong>
+        <strong>{isBuying ? "I'm buying" : "I'm selling"}</strong>
         <ExchangeInput
           type="text"
           data-testid="exchange-strong-balance-input"
