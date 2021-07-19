@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { BigNumber } from 'bignumber.js';
 import ConfirmTransactionModal from 'components/Modals/components/ConfirmTransactionModal';
 import PendingModal from 'components/Modals/components/PendingModal';
-import ApproveTokensModal from 'components/Modals/components/ApproveTokensModal';
 import RequestFailedModal from 'components/Modals/components/RequestFailedModal';
 import TransactionCompletedModal from 'components/Modals/components/TransactionCompletedModal';
 import TransactionFailedModal from 'components/Modals/components/TransactionFailedModal';
@@ -64,22 +63,32 @@ export default function ExchangeQuote({ strength }) {
   );
 
   const onApprove = async () => {
-    if (weakBalance.gte(bidAmount)) {
-      if (bidAmount.gt(NOMallowance)) {
-        handleModal(<ApproveTokensModal onConfirmApprove={onConfirmApprove} />);
-      } else {
-        handleModal(<ConfirmTransactionModal submitTrans={submitTrans} />);
-      }
+    if (bidAmount <= weakBalance) {
+      handleModal(<PendingModal type="approving" />);
+      // try {
+      //   strDispatch({
+      //     type: 'status',
+      //     value: 'APPROVE',
+      //   });
+
+      //   let tx = await NOMcontract.increaseAllowance(bondContract.address, bidAmount.toFixed(0));
+
+      //   tx.wait().then(() => {
+      //     handleModal(<TransactionCompletedModal tx={tx} />);
+      //   });
+
+      //   strDispatch({
+      //     type: 'status',
+      //     value: '',
+      //   });
+      // } catch (e) {
+      //   // eslint-disable-next-line no-console
+      //   // console.error(e.code, e.message.message);
+      //   // alert(e.message)
+      //   handleModal(<TransactionFailedModal error={e.code + '\n' + e.message.slice(0, 80) + '...'} />);
+      // }
     } else {
       handleModal(<TransactionFailedModal error={`${weak} Balance too low`} />);
-    }
-  };
-
-  const onConfirmApprove = () => {
-    try {
-      handleModal(<ConfirmTransactionModal isApproving submitTrans={submitTrans} />);
-    } catch (e) {
-      handleModal(<TransactionFailedModal error={e.code + '\n' + e.message.slice(0, 80) + '...'} />);
     }
   };
 
@@ -263,10 +272,13 @@ export default function ExchangeQuote({ strength }) {
 
           break;
         case floatRegExp.test(evt.target.value.toString()):
-          console.log('Input after test', evt.target.value);
-          const bidAmountUpdate = parse18(new BigNumber(parseFloat(evt.target.value).toString()));
+          const evttargetvalue = evt.target.value;
 
-          const inputUpdate = evt.target.value.toString();
+          console.log('Input after test', evttargetvalue);
+
+          const bidAmountUpdate = parse18(new BigNumber(parseFloat(evttargetvalue).toString()));
+
+          const inputUpdate = evttargetvalue.toString();
 
           if (bidDenom !== strength) {
             strUpdate = strUpdate.set('bidDenom', strength);
@@ -307,7 +319,6 @@ export default function ExchangeQuote({ strength }) {
           strUpdate = strUpdate.set('input', inputUpdate);
 
           strUpdate = strUpdate.set('output', format18(new BigNumber(askAmountUpdate.toString())).toFixed(8));
-
           strDispatch({
             type: 'update',
             value: strUpdate,
