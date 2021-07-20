@@ -7,6 +7,7 @@ import RequestFailedModal from 'components/Modals/components/RequestFailedModal'
 import TransactionCompletedModal from 'components/Modals/components/TransactionCompletedModal';
 import TransactionFailedModal from 'components/Modals/components/TransactionFailedModal';
 import { useWeb3React } from '@web3-react/core';
+import _, { debouce } from 'lodash';
 
 import { useChain } from 'context/chain/ChainContext';
 import { BondingCont, NOMCont } from 'context/chain/contracts';
@@ -23,7 +24,6 @@ import {
 import { useModal } from 'context/modal/ModalContext';
 import NOMButton from 'components/Exchange/NOMButton';
 import { format18, parse18 } from 'utils/math';
-import _, { debouce } from 'lodash';
 
 export default function ExchangeQuote({ strength }) {
   const { strongBalance, weakBalance } = useChain();
