@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   padding: 4px;
 
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
 
   background-color: ${props => props.theme.colors.bgNormal};
@@ -401,9 +401,8 @@ export const BridgeModalWrapper = styled(Wrapper)`
 
   @media screen and (max-width: ${responsive.laptopSmall}) {
     width: 600px;
-    top: 50px;
+    top: 20px;
     transform: translate(-50%, 0);
-    max-height: calc(100% - 100px);
   }
 `;
 

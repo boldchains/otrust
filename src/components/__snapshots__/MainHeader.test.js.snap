@@ -323,7 +323,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are not o
                   <span
                     class="c12"
                   >
-                    / 1E8
+                    / 100,000,000
                   </span>
                 </div>
               </div>
@@ -659,7 +659,7 @@ exports[`Given the MainHeader component and supplyNOM, currentETHPrice are of Bi
                   <span
                     class="c12"
                   >
-                    / 1E8
+                    / 100,000,000
                   </span>
                 </div>
               </div>

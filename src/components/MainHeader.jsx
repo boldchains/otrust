@@ -194,7 +194,9 @@ export default function MainHeader() {
                     <strong>
                       <span>
                         {BigNumber.isBigNumber(currentETHPrice)
-                          ? `${Math.round(format18(currentETHPrice).toNumber())}`
+                          ? `${Math.round(format18(currentETHPrice).toNumber()).toLocaleString(
+                              'en-US'
+                            )}`
                           : 'Loading'}
                       </span>
                     </strong>
@@ -208,11 +210,11 @@ export default function MainHeader() {
                     <strong>
                       <span>
                         {BigNumber.isBigNumber(supplyNOM)
-                          ? `${Math.round(format18(supplyNOM).toNumber())}`
+                          ? `${Math.round(format18(supplyNOM).toNumber()).toLocaleString('en-US')}`
                           : 'Loading'}
                       </span>
                     </strong>
-                    <Details>/ 1E8</Details>
+                    <Details>/ 100,000,000</Details>
                   </HeaderInfoItemValue>
                 </HeaderInfoItem>
               </Issued>

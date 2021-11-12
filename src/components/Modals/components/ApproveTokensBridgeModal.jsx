@@ -230,6 +230,9 @@ export default function ApproveTokensBridgeModal({
     [NOMContract, approveAmountInputValue, gasPrice]
   );
 
+  const amountDisplay = parseFloat(amountValue || 0).toFixed(6);
+  const calculatedDisplay = parseFloat(calculatedApproveValue || 0).toFixed(6);
+
   return (
     <Modal.BridgeSectionWrapper>
       <header>
@@ -245,11 +248,11 @@ export default function ApproveTokensBridgeModal({
 
       <main>
         <Message>
-          You want to sell <strong>{amountValue} wNOM</strong>, but you approved for sale only{' '}
+          You want to sell <strong>{amountDisplay} wNOM</strong>, but you approved for sale only{' '}
           {allowanceAmountGravity &&
-            BigNumber(allowanceAmountGravity.toString()).shiftedBy(-18).toString(10)}{' '}
-          wNOM. To sell this amount, please approve <strong>{calculatedApproveValue} wNOM</strong>{' '}
-          or more.
+            BigNumber(allowanceAmountGravity.toString()).shiftedBy(-18).toFixed(6)}{' '}
+          wNOM. To sell this amount, please approve <strong>{calculatedDisplay} wNOM</strong> or
+          more.
         </Message>
         <ApproveTokensWrapper>
           <div>

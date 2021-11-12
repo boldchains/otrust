@@ -37,7 +37,7 @@ function ChainProvider({ theme, children }) {
 
   useEffect(() => {
     // listen for changes on an Ethereum address
-    library.on('block', async number => {
+    async function onBlock(number) {
       if (state.blocknumber !== number) {
         try {
           await Promise.all([
@@ -96,16 +96,21 @@ function ChainProvider({ theme, children }) {
           console.log('Failed Chain Promise');
         }
       }
-    });
+    }
+
+    library.on('block', onBlock);
     // remove listener when the component is unmounted
     return () => {
-      library.removeAllListeners('block');
+      library.removeListener('block', onBlock);
     };
     // trigger the effect only on component mount
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const contextValue = {
     ...state,
+    client,
+    library,
     theme,
   };
 
